@@ -1,0 +1,124 @@
+\documentclass[a4paper,11pt]{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[dvipdfm]{graphicx}
+\usepackage{graphics,latexsym}
+\usepackage{amsmath}
+\usepackage{natbib}
+\usepackage[dvips]{color}
+\usepackage{subfigure}
+\usepackage{verbatim}
+
+\bibpunct{(}{)}{;}{a}{,}{,}
+
+\textheight 24cm \textwidth 17cm \topmargin-2cm
+%% \evensidemargin   -0.25cm
+\oddsidemargin-0.2cm
+%\pagestyle{empty}
+\renewcommand{\baselinestretch}{1}
+
+\begin{document}
+
+\title{Inference in Hybrid Bayesian Networks}
+
+\author{{Carlos Badenes}\\
+{\small Computational Intelligence Group, Departamento de Inteligencia Artificial, Universidad Polit\'ecnica de Madrid, Spain}}
+
+\date{}
+\maketitle
+
+%\title{}
+
+%\address{}
+
+\begin{abstract} There are many interesting domains containing not only discrete variables, but also continuous values such as distance, temperature or location. Hybrid models are used for representing uncertainty in these type of domains but it is is well-known that only for linear Gaussian models an exact inference is possible. Even so, the complexity of these algorithms is so high that present significant challenges to perfom. In this article, we review the advances that have been development in this regard in the last years.
+\end{abstract}
+
+
+\ \\
+KEY WORDS: Hybrid Bayesian Networks; Inference;
+
+
+
+
+\section{Introduction}
+
+The introduction of continuous variables in a graphical model has several particularities. We can multiply the multidimensional continuous functions representing the factors and marginalize out variables in a factor using integration rather than summation. (\cite{probabilisticModel2009}) 
+
+The representation of factors that imply continuous variables is the first challenge. It is impossible to represent a factor over continuous variables in a general way, so you have to select a valid representation for each Conditional Probability Distribution (CPD) in the network. It is generally unlikely that you can find a single parametric family that can correctly encode all of the intermediate factors in the network.
+
+The second challenge is using integration rather than summation when you marginalize a variable because not all functions are integrable: in some cases, the integral may be infinte or even ill defined. In addition, even functions where the integral is well defined may not have a closed-form integral, requiring the use of a numerical integration method, which is usually approximate.
+
+Thus, inference in hybrid models, although similar to discrete inference, implies a new set of challenges. When the distribution is a multivariate Gaussian many of these challenges dissapear. The integration operation used to marginalization is always well defined, and it is guaranteed to produce a finite integral under certain conditions.
+
+The remainder of this article is organized as follows. Section State-of-the-art describes publications, papers, researches centered in how to obtain the inference in Hybrid Bayesian Networks (HBN). After that, in the section Conclusions and future research, the main open lines for research are mentioned.
+
+\section{State-of-the-art}
+
+Since Bayesian network (BN) was introduced in the field of artificial intelligence in 1980s, some inference algorithms have been developed for probabilistic reasoning. However, when continuous variables are present in this networks, their dependence relationships could be nonlinear and their probability distributions could be arbitrary. In this cases, any inference algorithm could work efficently except Monte Carlo simulation methods such as Likelihood Weighting. But with unlikely evidence, simulation methods could be very slow to converge.
+
+Inference in HBN with both discrete and continuous variables is hard. Existing research often focuses on special instances, such as Conditional Linear Gaussian (CLG)  (\cite{lauritzen1992}) where a discrete node can have continuous children, but a continuous node is not allowed to have discrete child and all the local probability models of continuous variables are conditional linear Gaussian CPDs,  or Augmented CLGs. (\cite{cogatedetcher2005}).
+
+For Bayesian networks with arbitrary continuous variables Prakash P. Shenoy introduce a method for exact inference. This method consists of approximating general hybrid Bayesian networks by a mixture of Gaussians (MoG) BNs (\cite{shenoy2006}). Then it allows to use the Lauritzen-Jensen (LJ) algorithm for a bigger class of HBNs with continuous chance nodes with non-Gaussian distributions, networks with no restrictions on the topology of discrete and continuous variables, networks with conditionally deterministic variables that are a nonlinear function of their continuous parents, and networks with continuous chance variables whose variances are functions of their parents. This method first approximates a given hybrid BN by a MoG BN, and then using the LJ method for exact inference in MoG BNs. 
+
+In the line of approximate inference, Wei Sun and Kuo-Chu Chang propose (\cite{ump-bn2007}) an approximate inference algorithm called \textit{Unscented Message Passing} (UMP-BN)  that combines a deterministic sampling method and Pearl's message passing algorithm to provide the estimates of the first two moments of the posterior distributions. In this approximation, messages are represented by mean and variance of the continuous distribution for every node. 
+
+Other researches are focused on developing methodologies for more general non-Gaussian models, such as \textit{Mixture of Truncated Exponentials} (MTE) (\cite{cobbshenoy2005}) to approximate any probability density function (PDF) so can always be marginalized in closed form.
+
+Barry R. Cobb and Parkash P. Shenoy (\cite{cobbshenoyLinear2005}) extend exact inference in HBNs in which continuous variables may have any conditional density functions (not neccessarily conditional linear Gaussian distributions), discrete variables may have continuous parents and may have conditionally deterministic continuous variables that are linearly dependent on their continuos parents. MTE potential are used to approximate probability density functions in the representation so that probability density functions can be easily marginalized.
+
+But in a general HBN with nonlinear and/or non Gaussian variables there is no existing method that could produce exact posterior distribution. Changhe Yuan and Marek J. Druzdzel propose an algorithm called \textit{Hybrid Loopy Belief Propagation} (HLBP) (\cite{yuandruzdzelloopy2006}) which extends the \textit{Loopy Belief Propagation} (LBP) (Murphy et al., 1999) and \textit{Nonparametric Belief Propagation} (NBP) (Sudderth et al., 2003) algorithms to deal with these general networks. The main idea is to represent the LBP messages with mixture of Gaussians and formulate their calculation as Monte Carlo integration problems. 
+
+Later, they again describe an importance sampling-based algorithm (\cite{yuanmarek2007}) that directly deals with evidential reasoning in general HBN. They propose a technique called \textit{delayed importance function generation} that applies the HLBP (\cite{yuandruzdzelloopy2006}) to calculate the importance function and propose another technique called \textit{soft arc revesal} to draw samples when a deterministic variable has been observed. This technique makes importance sampling a viable approach for hybrid models. More specifically, they extend the EPIS-BN (\cite{yuandruzdzel2006}) to the most general setting. 
+
+ Sun, W., Chang K. and Laskey K.(\cite{scalable2010}) postulate in their paper a new inference approach called \textit{Direct Message Passing for Hybrid Bayesian Network} (DMP-HBN) by unifying message passing between different types of variables. This algorithm is able to provide an exact solution for polytree networks, and approximate solution by loopy propagation for general hybrid models. 
+Since DMP-HBN is a distributed algorithm utilizing only local information, there is no need to transform the network structure as required by the JT.
+
+\section{Conclusions and future research}
+
+What are the main open lines for research.
+
+
+
+\bibliographystyle{plainnat}
+\begin{thebibliography}{}
+
+\bibitem[Lauritzen, 1992]{lauritzen1992}
+S. Lauritzen, \textit{Propagation of probabilities, means amd variances in mixed graphical association models} JASA, vol. 87, no. 420, pp. 1098– 1108, 1992.
+
+\bibitem[Cobb and Shenoy, 2005]{cobbshenoy2005}
+Cobb B. R. and Shenoy P. P., \textit{Nonlinear deterministic relationships in Bayesian networks} In Proceedings of Eighth European Conference on Symbolic and Quantitative Approaches to Reasoning with uncertainty, (ECSQARU-05), pages 27-38, Berlin, 2005
+
+\bibitem[Cobb and Shenoy, 2005]{cobbshenoyLinear2005}
+Cobb B. R. and Shenoy P. P., \textit{Hybrid Bayesian Networks with Linear Deterministic Variables} Departament of Economics and Business, Virginia Military Institute, Lexington, 2005
+
+\bibitem[Cogate and Detcher, 2005]{cogatedetcher2005}
+Cogate V. and Detcher R., \textit{Approximate inference algorihtms for hybrid Bayesian networks with discrete constraints} In Proceedings of 21th Annual Conference on Uncertainty in Artificial Intelligence, (UAI-05), AUAI Press Corvallis, Oregon, 2005
+
+\bibitem[Shenoy, 2006]{shenoy2006}
+Shenoy P. P., \textit{Inference in Hybrid Bayesian Networks using Mixtures of Gaussians} University of Kansas School of Business, Lawrence, KS, 2006
+
+\bibitem[Yuan and Druzdzel, 2006]{yuandruzdzel2006}
+Yuan C. and Druzdzel M. J., \textit{Importance sampling algorithms for Bayesian Networks: Principles and Performance} Mathematical and Computer Modelling, 43:1189-1207, 2006
+
+\bibitem[Yuan and Druzdel, 2006]{yuandruzdzelloopy2006}
+Yuan C. and Druzdzel M. J., \textit{Hybrid loopy belief propagation} In Proceedings of the Third European Workshop on Probabilistic Graphical Models (PGM'06), pages 317-324, Prague, Czech Republic, 2006
+
+\bibitem[Sun and Chang, 2007]{ump-bn2007}
+Sun W. and Chang K. (2007) \textit{Unscented Message Passing for Arbitrary Continuous Variables in Bayesian Networks}. Department of Systems Engineering and Operations Research, George Mason University, Fairfax.
+
+\bibitem[Yuan and Drudzel, 2007]{yuanmarek2007}
+Yuan C. and Druzdzel M. J. (2007) \textit{Importance Sampling for General Hybrid Bayesian Networks}. Department of Computer Science and Engineering, Missisipi State University, Missisipi, 2007.
+
+\bibitem[Koller and Friedman, 2009]{probabilisticModel2009}
+Koller, D. and Friedman N. (2009) \textit{Probabilistic Graphical Models. Principles and Techniques}. The MIT Press, Cambridge, Massachusetts, 2009
+
+\bibitem[Sun et al., 2010]{scalable2010}
+Sun, W., Chang K. and Laskey K. (2010) \textit{Scalable Inference for Hybrid Bayesian Networks with Full Density Estimations}. The Sensor Fusion Lab, George Mason University, Fairfax, 2010
+
+
+\end{thebibliography}
+
+
+\end{document}
