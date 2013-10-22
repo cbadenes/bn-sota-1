@@ -59,7 +59,7 @@ Since Bayesian network (BN) was introduced in the field of artificial intelligen
 \cite{heskeszoeter2003} applied a generalized belief propagation to approximate inference in HBN. They replaced the strong marginalization in discrete networks: 
 $ P_{\alpha}(x_{\beta}) = \sum_{X_{\alpha\setminus\beta}}P_{\alpha}(X_{\alpha}) $ with a \textit{weak} marginal in HBN. Changing summation into integration these networks consisting of continuous Gaussian variables can be handled in a similar manner. Continuous Gaussian potentials and beliefs are summarized with a mean $E[x]$, covariance matrix $ E[(x-E[x])(y-E[y])] $, and (if necessary) proportionality constant.
 
-But \cite{schrempfhanebeck2004} considered that  using  Continuous Gaussian potentials is a drawback in the mere usage of the first two moments (mean and variance) to characterize continuous densities because exist different densities having identical first moments. Another problem detected is can not handle discrete nodes as children of continuous parents. An attempt to remove this restriction by using sigmod functions and it is picked up to include it into Lauritzen’s mechanism. But again, their accuracy is restricted to the first two moments of the densities.
+But \cite{heskeszoeter2004} considered that  using  Continuous Gaussian potentials is a drawback in the mere usage of the first two moments (mean and variance) to characterize continuous densities because exist different densities having identical first moments. Another problem detected is can not handle discrete nodes as children of continuous parents. An attempt to remove this restriction by using sigmod functions and it is picked up to include it into Lauritzen’s mechanism. But again, their accuracy is restricted to the first two moments of the densities.
  They proposed using hybrid conditional densities to capture the relationship between continuous and discrete variables. These densities must describe the probability of a continuous or discrete random variable, depending on the state of a set of mixed parent variables. Mixed means the set of parent variables contains continuous and discrete variables as well. The conditional densities $ f^{*}(x|u_1,...,u_n)$ are modeled using Gaussian mixtures in the continuous case and as sum over Gaussians and Dirac pulses in the case that x is discrete. One drawback of this approach is the limitation to singly connected graphs. One possibly way to overcome this is to find a method to do clustering in the graph.
 
 Existing other researches focuses on special instances, such as \textit{Conditional Linear Gaussian} (CLG)  (\cite{lauritzen1992}) where a discrete node can have continuous children, but a continuous node is not allowed to have discrete child and all the local probability models of continuous variables are conditional linear Gaussian CPDs.
@@ -77,11 +77,12 @@ But in a general HBN with nonlinear and/or non Gaussian variables there is no ex
 Later, \cite{yuanmarek2007}  describe an importance sampling-based algorithm that directly deals with evidential reasoning in general HBN. They propose a technique called \textit{delayed importance function generation} that applies the HLBP to calculate the importance function and propose another technique called \textit{soft arc revesal} to draw samples when a deterministic variable has been observed. This technique makes importance sampling a viable approach for hybrid models. More specifically, they extend the EPIS-BN (\cite{yuandruzdzel2006}) to the most general setting. 
 
 \cite{scalable2010} postulate in their paper a new inference approach called \textit{Direct Message Passing for Hybrid Bayesian Network} (DMP-HBN) by unifying message passing between different types of variables. This algorithm is able to provide an exact solution for polytree networks, and approximate solution by loopy propagation for general hybrid models. 
-Since DMP-HBN is a distributed algorithm utilizing only local information, there is no need to transform the network structure as required by the JT.
+Since DMP-HBN is a distributed algorithm utilizing only local information, there is no need to transform the network structure as required by the JT.  In this model is not required to partition the hybrid model into different network segments, each containing only pure type of variables and then conduct message passing separately. Now, messages can be exchanged directly between discrete and continuous variables within an unified framework.
 
 \section{Conclusions and future research}
 
-What are the main open lines for research.
+In this short state-of-the-art we have reviewed some of the most important research papers on inference in Hybrid Bayesian Networks published to date and the algorithms proposed to revolve it.
+The quality of these algorithms, quality as the performance, is constantly evolving and improving. Being this aspect the main line of research actually.
 
 
 
@@ -94,7 +95,7 @@ S. Lauritzen, \textit{Propagation of probabilities, means amd variances in mixed
 \bibitem[Heskes and Zoeter, 2003]{heskeszoeter2003}
 Heskes T. and Zoeter O., \textit{Generalized belief propagation for approximate inference in hybrid Bayesian networks} SNN, University of Nijmegen, Nijmegen, The Netherlands, 2003.
 
-\bibitem[Schrempf and Hanebeck, 2004]{schrempfhanebeck2004}
+\bibitem[Schrempf and Hanebeck, 2004]{heskeszoeter2004}
 Schrempf O. and Hanebeck U., \textit{A New Approeach for Hybrid Bayesian Networks Using Full Densities} Institute of Computer Design and Fault Tolerance, Universitat Karlsruhe, 2004.
 
 \bibitem[Cobb and Shenoy, 2004]{cobbshenoy2004}
@@ -129,6 +130,9 @@ Koller, D. and Friedman N. (2009) \textit{Probabilistic Graphical Models. Princi
 
 \bibitem[Sun et al., 2010]{scalable2010}
 Sun, W., Chang K. and Laskey K. (2010) \textit{Scalable Inference for Hybrid Bayesian Networks with Full Density Estimations}. The Sensor Fusion Lab, George Mason University, Fairfax, 2010
+
+\bibitem[Gogate and Dechter, 2012]{gogatedetcher2012}
+Gogate V. and Detcher R. (2012) \textit{Approximate Inference Algorithms for Hybrid Bayesian Networks with Discrete Constraints}. Universitiy of California, Irvine, 2012
 
 
 \end{thebibliography}
