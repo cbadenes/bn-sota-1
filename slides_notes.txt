@@ -1,0 +1,59 @@
+Variance
+========
+- The variance of a random variable X is its second central moment, the expected value of the squared deviation from the mean μ = E[X]:
+http://upload.wikimedia.org/math/4/7/e/47e1dfd328acb38d8b16986de8325245.png
+
+Covariance
+==========
+- How much two random variables change together
+- The covariance between two jointly distributed real-valued random variables x and y with finite second moments is defined[2] as
+http://upload.wikimedia.org/math/8/d/9/8d9b71686f79329926f82755b1584d23.png
+
+Deterministic variables with Conditional Linear Gaussian
+========================================================
+- A variable is conditionally deterministic when it can be described by a deterministic function of a set of direct predecessors. Deterministic means not subject to chance, or certain.
+- When a hybrid Bayesian network has conditionally deterministic variables with continuous parents, the joint density function for the continuous variables does not exist. 
+- A probability density function (pdf), or density of a continuous random variable, is a function that describes the relative likelihood for this random variable to take on a given value. 
+ The probability of the random variable falling within a particular range of values is given by the integral of this variable’s density over that range.
+- The joint probability density function is defined as a function of the n variables, such that, for any domain D in the n-dimensional space of the values of the variables X1, …, Xn, the probability that a realisation of the set variables falls inside the domain D is
+
+http://upload.wikimedia.org/math/c/2/f/c2fccc376ef4c9d2f7a4131a29ce75ec.png
+
+- Conditional linear Gaussian distributions can handle such cases when the continuous variables have a multi-variate normal distribution and the discrete variables do not have continuous parents
+
+
+Mixture Models
+==============
+
+- In statistics, a mixture model is a probabilistic model for representing the presence of subpopulations within an overall population, without requiring that an observed data-set should identify the sub-population to which an individual observation belongs. Formally a mixture model corresponds to the mixture distribution that represents the probability distribution of observations in the overall population
+
+- Here the underlying random variables may be random vectors, each having the same dimension, in which case the mixture distribution is a multivariate distribution.
+
+- In cases where each of the underlying random variables is continuous, the outcome variable will also be continuous and its probability density function is sometimes referred to as a mixture density. The cumulative distribution function (and the probability density function if it exists) can be expressed as a convex combination (i.e. a weighted sum, with non-negative weights that sum to 1) of other distribution functions and density functions. The individual distributions that are combined to form the mixture distribution are called the mixture components, and the probabilities (or weights) associated with each component are called the mixture weights.
+
+	http://en.wikipedia.org/wiki/File:Gaussian-mixture-example.svg
+
+Mixtures of Truncated Exponentials (MTE)
+========================================
+-  Truncated probability distribution is when the value of a random variable is either bounded below or above (or both)
+-  Exponential distribution is the probability distribution that describes the time between events in a process in which events occur continuously and independently at a constant average rate
+	http://en.wikipedia.org/wiki/File:Mean_exp.svg
+
+	- The probability density function (pdf) of an exponential distribution is
+		http://upload.wikimedia.org/math/4/5/0/450b84da3274134a4f8280d8b46067b9.png
+
+	- The mean or expected value of an exponentially distributed random variable X with rate parameter λ is given by
+	    http://upload.wikimedia.org/math/a/1/2/a12c0f2b9a3efd768c970f0ddf6535d4.png
+
+	- The variance of X is given by
+		http://upload.wikimedia.org/math/d/a/b/dab5a58e08e019e1b28a884a2caa19c2.png
+
+Mixtures of Gaussians (MoG)
+===========================
+- In mathematics, a Gaussian function (named after Carl Friedrich Gauss) is a function of the form:
+http://upload.wikimedia.org/math/1/9/f/19fc9f01844615b08c190fdac5a87eda.png
+
+- The graph of a Gaussian is a characteristic symmetric "bell curve" shape that quickly falls off towards zero. The parameter a is the height of the curve's peak, b is the position of the center of the peak, and c (the standard deviation) controls the width of the "bell".
+
+- In statistics and probability theory, Gaussian functions appear as the density function of the normal distribution, which is a limiting probability distribution of complicated sums, according to the central limit theorem.
+	-> In probability theory, the central limit theorem (CLT) states that, given certain conditions, the arithmetic mean of a sufficiently large number of iterates of independent random variables, each with a well-defined expected value and well-defined variance, will be approximately normally distributed.[1]
