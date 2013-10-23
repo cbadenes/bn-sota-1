@@ -1,4 +1,77 @@
+1
+==
+
+
+- Particular case of Conditional linear Gaussian (CLG):
+  A commonly used type of hybrid Bayesian network is the conditional linear Gaussian (CLG) model [6,12,13]. In CLG models, the distribution of a continuous variable is a linear Gaussian function of its continuous parents. One limitation of CLG models is that discrete nodes cannot have continuous parents. Lerner et al. [16] introduces augmented CLG networks where discrete variables may depend on continuous parents. Several algorithms for performing approximate inference in such networks have been developed (see, e.g., [2,10,15,16,21]).
+  CLG models cannot accomodate discrete nodes with continuous parents because of the as- sumption that the joint distribution is a mixture of Gaussians.
+
+2: Challenges
+==
+- The complexity of these algorithms is so high that present significant challenges to perfom
+- Discretization of continuous distributions can allow approximate inference in a hybrid Bayesian network without limitations on relationships among continuous and discrete variables. Dis- cretization of continuous chance variables is equivalent to approximating a probability density function (PDF) with mixtures of uniform distributions. Discretization with a small number of states can lead to poor accuracy, while discretization with a large number of states can lead to excessive computational effort.
+- However, several factors make inference in hybrid models extremely hard. First, linear or nonlinear deterministic relations may exist in the models. Second, the models may con- tain arbitrary probability distributions. Third, the orderings among the discrete and continu- ous variables may be arbitrary.
+
+3: Probability
+==
+- In discrete variable it uses Joint Density Function but in continuous They used a probability density function (pdf), or density of a continuous random variable, is a function that describes the relative likelihood for this random variable to take on a given value. The probability of the random variable falling within a particular range of values is given by the integral of this variable’s density over that range—that is, it is given by the area under the density function but above the horizontal axis and between the lowest and greatest values of the range.
+- Heskes and Zoeter (2003) applied a generalized belief propagation to approximate inference in HBNs\[
+mean: E[x], covariance: E[(x-E[x])(y-E[y])]
+\]
+- 
+- Schrempf and Hanebeck, 2004 considered that using  first two moments is a drawback
+
+4.1: Deterministic 
+================
+- Shenoy and Cobb using relationships derived from joint cumulative distribution functions (CDF’s). This allows MTE potentials to be used for inference in any CLG model, as well as other models that have conditionally deterministic variables but do not fit the CLG restrictions, such as those containing discrete nodes with continuous parents.
+- General formulations of MTE potentials which approximate the normal probability density function (PDF) exist (Cobb and Shenoy, 2003); however, these formulations cannot be used to model a conditional distribution where the variance of a variable given values of its continuous parents is zero.
+- When relationships between continuous vari- ables are deterministic, the joint PDF does not exist. We can express a conditional probability mass function as a degenerate function. If Y is a deterministic relationship of variables in X, i.e. y = g(x), the conditional mass function (CMF) for {Y | x} is defined as: (function)
+where 1{A} is the indicator of the event A, i.e. 1{A} = 1 if A occurs and 0 otherwise. Graph-
+- a deterministic algorithm is an algorithm which, given a particular input, will always produce the same output, with the underlying machine always passing through the same sequence of states
+
+4.2: MTE
+=========
+- Any probability density function (PDF) can be approximated with an MTE potential, which can always be marginalized in a closed form.
+- shenoy and cobb int their paper presents MTE potentials that approximate an arbitrary normal PDF with any mean and a positive variance.
+	The main goal of this paper is to describe an implementation of MTE potentials in hybrid Bayesian networks where continuous distributions are conditional linear Gaussian distributions
+- Assuming that the joint density exists, MTE potentials can be used for inference in hybrid Bayesian networks that do not fit the restrictive assumptions of the conditional linear Gaussian (CLG) model, such as networks containing discrete nodes with continuous parents.
+- Any continuous PDF can be approximated by an MTE potential
+- Figure: 4-piece, 1-term MTE approximation overlayed on the standard normal distribution
+The PDF for the normal distribution is
+fX (x) = √ 1 exp{ − 1 􏰁 x − μ 􏰂2 }. (6) 2πσ 2σ
+A general formulation for a 4-piece, 1-term normalized MTE potential which approximates a normal PDF is as follows:
+ −0.017203 + 0.930964 exp{1.27(x−μ)} if μ − 3σ ≤ x < μ − σ σ σ σ
+￼￼￼￼￼￼￼ 0.442208 − 0.038452 exp{ − 1.64(x−μ)} if μ − σ ≤ x < μ φ(x)=σσ σ (7)
+￼￼￼ 0.442208 − 0.038452 exp{1.64( x−μ )} if μ ≤ x < μ + σ σ σ σ
+￼￼￼ −0.017203 + 0.930964 exp{ − 1.27(x−μ)} if μ + σ ≤ x < μ + 3σ. σσσ
+
+
+4.3: MoGs
+=========
+- this paper is to describe a method for exact inference in general hybrid Bayesian networks (BNs) (with a mixture of discrete and continuous chance variables). Our method consists of approximating general hybrid Bayesian networks by a mixture of Gaussians (MoG) BNs.
 Variance
+- There exists a fast algorithm by Lauritzen-Jensen (LJ) (Junction Tree ALgorithm) for making exact inferences in MoG Bayesian networks, and there exists a commercial implementation of this algorithm.
+	Limitations:
+		- COmmercial software (mplemented in Hugin,)
+		- All continuous chance variables must have conditional linear Gaussian distributions
+		- Discrete chance nodes cannot have continuous parents
+- The methods described in this paper will enable us to use the LJ algorithm for a bigger class of hybrid Bayesian networks. This includes networks with continuous chance nodes with non-Gaussian distributions, networks with no restrictions on the topology of discrete and continuous variables, networks with conditionally deterministic variables that are a nonlinear function of their continuous parents, and networks with continuous chance variables whose variances are functions of their parents.
+- It is well known that mixtures of Gaussians can approximate any probability distribution [Titterington et al. 1985]
+
+5: Hybrid Loopy Belief Propagation(HLBP)
+=========================================
+- The main idea is to represent the LBP messages with mixture of Gaussians and formulate their calculation as Monte Carlo integration problems. The new algorithm is general enough to deal with hybrid models that may represent linear or nonlinear equations and arbitrary probability distributions.
+- we propose the Hybrid Loopy Belief Propagation algorithm, which extends the Loopy Belief Propagation (LBP) (Murphy et al., 1999) and Nonparametric Belief Propaga- tion (NBP) (Sudderth et al., 2003) algorithms to deal with general hybrid Bayesian networks.
+- We now know how to use Monte Carlo inte- gration methods to estimate the LBP messages, represented as sets of weighted samples.
+- Monte Carlo and Mixture of Gaussians
+- Its accuracy is comparable to the Gibbs sampler in (Sudderth et al., 2003) but much more efficient given the same number of samples
+
+6: DMP
+======
+- Theoretically, DMP can provide exact results for a polytree CLG
+- In this paper, we present a new representation and inference algorithm called Direct Message Passing (DMP) to exchange messages between discrete and continuous variables. Essentially, DMP provides an alternative for probabilistic inference in hybrid Bayesian networks. It can be extended with unscented transformation20 for general hybrid model with nonlinear and/or non-Gaussian distributions.
+
+
 ========
 - The variance of a random variable X is its second central moment, the expected value of the squared deviation from the mean μ = E[X]:
 http://upload.wikimedia.org/math/4/7/e/47e1dfd328acb38d8b16986de8325245.png
